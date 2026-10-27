@@ -13,6 +13,7 @@ public class StudyUpGUI extends JFrame implements ActionListener{
 	
 	private JTextField moduleField;
 	private JButton addModuleButton;
+	private JButton removeModuleButton;
 	
 	private JButton createButton;
 	private JButton viewButton;
@@ -71,9 +72,17 @@ public class StudyUpGUI extends JFrame implements ActionListener{
         moduleField = new JTextField(10);
         addModuleButton = new JButton("Add Module");
         addModuleButton.addActionListener(this);
+        
         modulePanel.add(new JLabel("Module:"));
+        modulePanel.add(moduleField);
         modulePanel.add(addModuleButton);
+        
+        removeModuleButton = new JButton("Remove Module");
+        removeModuleButton.addActionListener(this);
+        modulePanel.add(removeModuleButton);
         bottomPanel.add(modulePanel);
+        
+        
         
         setVisible(true);
 	}
@@ -146,6 +155,19 @@ public class StudyUpGUI extends JFrame implements ActionListener{
 	        selected.addModule(module);
 	        moduleField.setText("");
 	        profileArea.setText(selected.getProfileText());
+	    }if (e.getSource() == removeModuleButton) {
+	        Student selected = getSelectedStudent();
+	        if (selected == null) {
+	            return;
+	        }
+
+	        String module = moduleField.getText().trim().toUpperCase();
+	        if (selected.removeModule(module)) {
+	            moduleField.setText("");
+	            profileArea.setText(selected.getProfileText());
+	        } else {
+	            JOptionPane.showMessageDialog(this, "That student doesn't have that module.");
+	        }
 	    }
 	    
 	}
