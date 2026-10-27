@@ -4,11 +4,12 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
 
+
 public class StudyUpGUI extends JFrame implements ActionListener{
 	
 	private JTextField nameField;
 	private JTextField emailField;
-	private JTextField moduleField;
+	private JTextField courseField;
 	
 	private JButton createButton;
 	
@@ -29,14 +30,14 @@ public class StudyUpGUI extends JFrame implements ActionListener{
         
         nameField = new JTextField();
         emailField = new JTextField();
-        moduleField = new JTextField();
+        courseField = new JTextField();
         
         formPanel.add(new JLabel("Name: "));
         formPanel.add(nameField);
         formPanel.add(new JLabel("Email: "));
         formPanel.add(emailField);
-        formPanel.add(new JLabel("Module: "));
-        formPanel.add(moduleField);
+        formPanel.add(new JLabel("Course: "));
+        formPanel.add(courseField);
         
         createButton = new JButton("Create Account");
         createButton.addActionListener(this);
@@ -55,11 +56,30 @@ public class StudyUpGUI extends JFrame implements ActionListener{
         
         setVisible(true);
 	}
+	
+	private void refreshList() {
+		studentListDisplay.setListData(studentList.toArray(new Student[0]));
+		setTitle("StudyUp ("+studentList.size()+" students)");
+	}
+	
 	@Override
-	public void actionPreformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) {
+	    if (e.getSource() == createButton) {
+	        String name = nameField.getText().trim();
+	        String email = emailField.getText().trim();
+	        String course = courseField.getText().trim();
+
+	        Student student = new Student(name, email, course);
+	        studentList.add(student);
+	        refreshList();
+
+	        nameField.setText("");
+	        emailField.setText("");
+	        courseField.setText("");
+	    }
 	}
 	public static void main (String[] args) {
 		new StudyUpGUI();
 	}
-	
 }
+
