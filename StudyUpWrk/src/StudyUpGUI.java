@@ -23,8 +23,6 @@ public class StudyUpGUI extends JFrame implements ActionListener{
 	private JTextArea profileArea;
 	
 	private ArrayList<Student> studentList;
-		
-	
 	
 	public StudyUpGUI() {
 		super("StudyUp");
@@ -89,6 +87,7 @@ public class StudyUpGUI extends JFrame implements ActionListener{
         
         setVisible(true);
 	}
+
 	
 	private void refreshList() {
 		studentListDisplay.setListData(studentList.toArray(new Student[0]));

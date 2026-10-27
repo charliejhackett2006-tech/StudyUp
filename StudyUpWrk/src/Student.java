@@ -6,6 +6,7 @@ public class Student {
 	private String course;
 	
 	private ArrayList<String> modules = new ArrayList<>();
+	private ArrayList<TimeSlot> availability = new ArrayList<>();
 	
 	public Student(String name, String email, String course) {
 		this.name= name;
@@ -28,9 +29,17 @@ public class Student {
 	public boolean removeModule(String module) {
 	    return modules.remove(module);
 	}
+	public void addSlot(TimeSlot slot) {
+		availability.add(slot);
+	}
 	
 	public String getProfileText() {
-		return "Name: "+name+"\nEmail:"+email+"\nCourse:"+course+"\nModules: "+modules;
+		String response = "Name: "+name+"\nEmail:"+email+"\nCourse:"+course+"\nModules: "+modules+"\nAvailability:";
+		
+		for (TimeSlot slot: availability) {
+			response +="\n "+slot;
+		}
+		return response;
 	}
 	
     @Override
