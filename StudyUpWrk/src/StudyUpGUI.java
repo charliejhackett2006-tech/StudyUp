@@ -15,6 +15,7 @@ public class StudyUpGUI extends JFrame implements ActionListener{
 	private JButton addModuleButton;
 	private JButton removeModuleButton;
 	
+	
 	private JButton createButton;
 	private JButton viewButton;
 	
@@ -22,6 +23,8 @@ public class StudyUpGUI extends JFrame implements ActionListener{
 	private JTextArea profileArea;
 	
 	private ArrayList<Student> studentList;
+		
+	
 	
 	public StudyUpGUI() {
 		super("StudyUp");
