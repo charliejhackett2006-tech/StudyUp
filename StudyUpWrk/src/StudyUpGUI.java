@@ -24,6 +24,11 @@ public class StudyUpGUI extends JFrame implements ActionListener{
 	
 	private ArrayList<Student> studentList;
 	
+	private JTextField dayField;
+	private JTextField startField;
+	private JTextField endField;
+	private JButton addSlotButton;
+	
 	public StudyUpGUI() {
 		super("StudyUp");
 		setSize(700, 520);
@@ -83,7 +88,20 @@ public class StudyUpGUI extends JFrame implements ActionListener{
         modulePanel.add(removeModuleButton);
         bottomPanel.add(modulePanel);
         
-        
+        JPanel slotPanel = new JPanel(new FlowLayout());
+        dayField = new JTextField(8);
+        startField = new JTextField(3);
+        endField = new JTextField(3);
+        addSlotButton = new JButton("Add Slot");
+        addSlotButton.addActionListener(this);
+        slotPanel.add(new JLabel("Day:"));
+        slotPanel.add(dayField);
+        slotPanel.add(new JLabel("Start (0-23):"));
+        slotPanel.add(startField);
+        slotPanel.add(new JLabel("End (0-23):"));
+        slotPanel.add(endField);
+        slotPanel.add(addSlotButton);
+        bottomPanel.add(slotPanel);        
         
         setVisible(true);
 	}
@@ -170,9 +188,36 @@ public class StudyUpGUI extends JFrame implements ActionListener{
 	        } else {
 	            JOptionPane.showMessageDialog(this, "That student doesn't have that module.");
 	        }
-	    }
-	    
-	}
+	    }if (e.getSource()==addSlotButton) {
+	    	Student selected = getSelectedStudent();
+	    	if (selected == null) {
+	    		return;
+	    	}
+	    	String day = dayField.getText().trim();
+	    	try {
+	    		 int start = Integer.parseInt(startField.getText().trim());
+	    	        int end = Integer.parseInt(endField.getText().trim());
+
+	    	        if (day.isEmpty()) {
+	    	            JOptionPane.showMessageDialog(this, "Enter a day.");
+	    	        } else if (start < 0 || end > 23) {
+	    	            JOptionPane.showMessageDialog(this, "Hours must be between 0 and 23.");
+	    	        } else if (end <= start) {
+	    	            JOptionPane.showMessageDialog(this, "End time must be after start time.");
+	    	        } else {
+	    	            selected.addSlot(new TimeSlot(day, start, end));
+	    	            dayField.setText("");
+	    	            startField.setText("");
+	    	            endField.setText("");
+	    	            profileArea.setText(selected.getProfileText());
+	    	        }
+	    	    } catch (NumberFormatException ex) {
+	    	        JOptionPane.showMessageDialog(this, "Enter the hours as whole numbers.");
+	    	    }
+	    	}
+	    		
+	    	}
+	    	
 	public static void main (String[] args) {
 		new StudyUpGUI();
 	}
