@@ -11,6 +11,9 @@ public class StudyUpGUI extends JFrame implements ActionListener{
 	private JTextField emailField;
 	private JTextField courseField;
 	
+	private JTextField moduleField;
+	private JButton addModuleButton;
+	
 	private JButton createButton;
 	private JButton viewButton;
 	
@@ -64,6 +67,14 @@ public class StudyUpGUI extends JFrame implements ActionListener{
         bottomPanel.add(viewPanel);
         add(bottomPanel, BorderLayout.SOUTH);
         
+        JPanel modulePanel = new JPanel(new FlowLayout());
+        moduleField = new JTextField(10);
+        addModuleButton = new JButton("Add Module");
+        addModuleButton.addActionListener(this);
+        modulePanel.add(new JLabel("Module:"));
+        modulePanel.add(addModuleButton);
+        bottomPanel.add(modulePanel);
+        
         setVisible(true);
 	}
 	
@@ -83,7 +94,7 @@ public class StudyUpGUI extends JFrame implements ActionListener{
 	private Student getSelectedStudent() {
 	    Student selected = studentListDisplay.getSelectedValue();
 	    if (selected == null) {
-	        JOptionPane.showMessageDialog(this, "Select a student from the list first.");
+	        JOptionPane.showMessageDialog(this, "Select a student first.");
 	    }
 	    return selected;
 	}
@@ -95,7 +106,7 @@ public class StudyUpGUI extends JFrame implements ActionListener{
 	        String course = courseField.getText().trim();
 	        
 	        if (name.isEmpty() || email.isEmpty() || course.isEmpty()) {
-	            JOptionPane.showMessageDialog(this, "All fields are required.");
+	            JOptionPane.showMessageDialog(this, "Fill out all details please.");
 	            return;
 	        }
 	        if (findByEmail(email) != null) {
@@ -116,7 +127,27 @@ public class StudyUpGUI extends JFrame implements ActionListener{
 	            return;
 	        }
 	        profileArea.setText(selected.getProfileText());
+	    }if  (e.getSource() == addModuleButton) {
+	        Student selected = getSelectedStudent();
+	        if (selected == null) {
+	            return;
+	        }
+
+	        String module = moduleField.getText().trim().toUpperCase();
+	        if (module.isEmpty()) {
+	            JOptionPane.showMessageDialog(this, "Enter a module code.");
+	            return;
+	        }
+	        if (selected.getModules().contains(module)) {
+	            JOptionPane.showMessageDialog(this, "That module is already added.");
+	            return;
+	        }
+
+	        selected.addModule(module);
+	        moduleField.setText("");
+	        profileArea.setText(selected.getProfileText());
 	    }
+	    
 	}
 	public static void main (String[] args) {
 		new StudyUpGUI();

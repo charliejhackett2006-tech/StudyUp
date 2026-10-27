@@ -28,9 +28,9 @@ public class Student {
 	}
 	
 	public String getProfileText() {
-		return "Name: "+name+"\nEmail:"+email+"\nCourse:"+course;
-	
+		return "Name: "+name+"\nEmail:"+email+"\nCourse:"+course+"\nModules: "+modules;
 	}
+	
     @Override
     public String toString() {
     	return name+"("+email+")";
