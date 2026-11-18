@@ -226,10 +226,19 @@ public class StudyUpGUI extends JFrame implements ActionListener{
 	    	        JOptionPane.showMessageDialog(this, "Enter the hours as whole numbers.");
 	    	    }
 	    }if(e.getSource()== findButton) {
+	    	Student me = getSelectedStudent();
+	    	if(me == null) {
+	    		return;
+	    	}
+	    	
 	        String module = searchField.getText().trim().toUpperCase();
 	        if (module.isEmpty()) {
 	            JOptionPane.showMessageDialog(this, "Enter a module code to search for.");
 	            return;
+	        }
+	        if(!me.hasModule(module)) {
+	        	JOptionPane.showMessageDialog(this, "That isn't one of your modules.");
+	        	return;
 	        }
 
 	        String results = "Students taking " + module + ":";
@@ -246,7 +255,7 @@ public class StudyUpGUI extends JFrame implements ActionListener{
 	            results += "\n  (none found)";
 	        }
 	        profileArea.setText(results);
-	    }
+	    }//next if from here
 	    		
 	    	}
 	    	
