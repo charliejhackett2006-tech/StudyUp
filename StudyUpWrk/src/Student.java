@@ -29,6 +29,7 @@ public class Student {
 	public boolean removeModule(String module) {
 	    return modules.remove(module);
 	}
+
 	public void addSlot(TimeSlot slot) {
 		availability.add(slot);
 	}
