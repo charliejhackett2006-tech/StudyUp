@@ -15,7 +15,6 @@ public class StudyUpGUI extends JFrame implements ActionListener{
 	private JButton addModuleButton;
 	private JButton removeModuleButton;
 	
-	
 	private JButton createButton;
 	private JButton viewButton;
 	
@@ -28,6 +27,9 @@ public class StudyUpGUI extends JFrame implements ActionListener{
 	private JTextField startField;
 	private JTextField endField;
 	private JButton addSlotButton;
+	
+	private JTextField searchField;
+	private JButton findButton;
 	
 	public StudyUpGUI() {
 		super("StudyUp");
@@ -101,7 +103,16 @@ public class StudyUpGUI extends JFrame implements ActionListener{
         slotPanel.add(new JLabel("End (0-23):"));
         slotPanel.add(endField);
         slotPanel.add(addSlotButton);
-        bottomPanel.add(slotPanel);        
+        bottomPanel.add(slotPanel);    
+        
+        JPanel searchPanel = new JPanel(new FlowLayout());
+        searchField = new JTextField(10);
+        findButton = new JButton("Find Students");
+        findButton.addActionListener(this);
+        searchPanel.add(new JLabel("Find by module:"));
+        searchPanel.add(searchField);
+        searchPanel.add(findButton);
+        bottomPanel.add(searchPanel);
         
         setVisible(true);
 	}
@@ -214,7 +225,28 @@ public class StudyUpGUI extends JFrame implements ActionListener{
 	    	    } catch (NumberFormatException ex) {
 	    	        JOptionPane.showMessageDialog(this, "Enter the hours as whole numbers.");
 	    	    }
-	    	}
+	    }if(e.getSource()== findButton) {
+	        String module = searchField.getText().trim().toUpperCase();
+	        if (module.isEmpty()) {
+	            JOptionPane.showMessageDialog(this, "Enter a module code to search for.");
+	            return;
+	        }
+
+	        String results = "Students taking " + module + ":";
+	        boolean foundAny = false;
+
+	        for (Student s : studentList) {
+	            if (s.hasModule(module)) {
+	                results += "\n  " + s;
+	                foundAny = true;
+	            }
+	        }
+
+	        if (!foundAny) {
+	            results += "\n  (none found)";
+	        }
+	        profileArea.setText(results);
+	    }
 	    		
 	    	}
 	    	
