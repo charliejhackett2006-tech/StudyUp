@@ -237,7 +237,7 @@ public class StudyUpGUI extends JFrame implements ActionListener{
 	            return;
 	        }
 	        if(!me.hasModule(module)) {
-	        	JOptionPane.showMessageDialog(this, "That isn't one of your modules.");
+	        	JOptionPane.showMessageDialog(this, "That isn't one of your modules");
 	        	return;
 	        }
 
@@ -245,7 +245,7 @@ public class StudyUpGUI extends JFrame implements ActionListener{
 	        boolean foundAny = false;
 
 	        for (Student s : studentList) {
-	            if (s.hasModule(module)) {
+	            if (s != me && s.hasModule(module)) {
 	                results += "\n  " + s;
 	                foundAny = true;
 	            }
