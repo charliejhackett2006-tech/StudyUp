@@ -32,6 +32,26 @@ public class Student {
 	public boolean hasModule(String module) {
 		return modules.contains(module);
 	}
+	public int countSharedModules(Student other) {
+		int count = 0;
+		for (String m: modules) {
+			if (other.hasModule(m)) {
+				count++;
+			}
+		}
+		return count;
+	}
+	public int countOverlappingSlots(Student other) {
+	    int count = 0;
+	    for (TimeSlot mine : availability) {
+	        for (TimeSlot theirs : other.availability) {
+	            if (mine.overlaps(theirs)) {
+	                count++;
+	            }
+	        }
+	    }
+	    return count;
+	}
 	public void addSlot(TimeSlot slot) {
 		availability.add(slot);
 	}
