@@ -31,6 +31,8 @@ public class StudyUpGUI extends JFrame implements ActionListener{
 	private JTextField searchField;
 	private JButton findButton;
 	
+	private JButton rankButton;
+	
 	public StudyUpGUI() {
 		super("StudyUp");
 		setSize(700, 520);
@@ -113,6 +115,12 @@ public class StudyUpGUI extends JFrame implements ActionListener{
         searchPanel.add(searchField);
         searchPanel.add(findButton);
         bottomPanel.add(searchPanel);
+        
+        JPanel rankPanel = new JPanel(new FlowLayout());
+        rankButton = new JButton("Rank Matches");
+        rankButton.addActionListener(this);
+        rankPanel.add(rankButton);
+        bottomPanel.add(rankPanel);
         
         setVisible(true);
 	}
