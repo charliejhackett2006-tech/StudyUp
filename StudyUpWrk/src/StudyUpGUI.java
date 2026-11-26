@@ -263,6 +263,42 @@ public class StudyUpGUI extends JFrame implements ActionListener{
 	            results += "\n  (none found)";
 	        }
 	        profileArea.setText(results);
+	    }if(e.getSource()== rankButton){
+	    	Student me = getSelectedStudent();
+	        if (me == null) {
+	            return;
+	        }
+
+	        ArrayList<Match> matches = new ArrayList<>();
+	        for (Student s : studentList) {
+	            if (s != me) {
+	                int shared = me.countSharedModules(s);
+	                if (shared > 0) {
+	                    matches.add(new Match(s, shared, me.countOverlappingSlots(s)));
+	                }
+	            }
+	        }
+
+	        //bubble sorting kind of a mess basically just straight from geeksforgeeks
+	        for (int i = 0; i < matches.size() - 1; i++) {
+	            for (int j = 0; j < matches.size() - 1 - i; j++) {
+	                if (matches.get(j + 1).isBetterThan(matches.get(j))) {
+	                    Match temp = matches.get(j);
+	                    matches.set(j, matches.get(j + 1));
+	                    matches.set(j + 1, temp);
+	                }
+	            }
+	        }
+
+	        String results = "Best matches for " + me.getName() + ":";
+	        if (matches.isEmpty()) {
+	            results += "\n  (no matches yet)";
+	        }
+	        for (Match m : matches) {
+	            results += "\n  " + m;
+	        }
+	        profileArea.setText(results);
+	    
 	    }//next if from here
 	    		
 	    	}
