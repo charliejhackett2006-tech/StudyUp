@@ -8,6 +8,10 @@ public class TimeSlot {
 		this.day = day;
 		this.startHour = startHour;
 		this.endHour = endHour;
+	
+	}
+	public boolean overlaps(TimeSlot other) {
+		return day.equalsIgnoreCase(other.day) && startHour < other.endHour && other.startHour < endHour;
 	}
 	public String getDay() {return day;}
 	public int getStartHour() {return startHour;}
